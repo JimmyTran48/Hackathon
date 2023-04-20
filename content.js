@@ -13,7 +13,6 @@ setTimeout(() => {
   div.innerText = "TAKE A BREAK :D";
 
   html.appendChild(div);
-  div.remove();
-  html.appendChild(body);
-  // alert("I WORK!");
+
+  alert("I WORK!");
 }, 2000);
