@@ -13,7 +13,7 @@
   width: 90%;
   display: flex;
   justify-content: space-between;
-  background-color: #eb6e6e;
+  background-color: #d9ebf1;
 }
 
 .timeContainer {
@@ -62,7 +62,7 @@ input {
   width: 90%;
   display: flex;
   justify-content: space-between;
-  background-color: #eb6e6e;
+  background-color: #d9ebf1;
 }
 
 button {

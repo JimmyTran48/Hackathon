@@ -30,46 +30,12 @@ const lowerCont = document.querySelector("#three");
 
 let id;
 
-// const start = () => {
-//   clearInterval(id);
-//   upperCont.style.backgroundColor = "#77eb6e";
-//   lowerCont.style.backgroundColor = "#77eb6e";
-//   //FUNCTIONALITY
-//   let workInputTime = workInput.value;
-//   workTimer.innerText = workInputTime;
-//   workInput.style.display = "none";
-//   workTimer.style.display = "block";
-//   mainButton.innerHTML = "Take a break!";
-
-//   const setWork = async () => {
-//     const response = await chrome.runtime.sendMessage({
-//       method: "set_work",
-//       num: workInputTime,
-//     });
-//   };
-//   setWork();
-//   // id = setInterval(() => {
-//   //   setWork();
-//   //   --workInputTime;
-//   //   workTimer.innerHTML = workInputTime;
-//   //   if (workInputTime <= 0) {
-//   //     //play sound
-//   //     breaking();
-//   //   }
-//   // }, 1000);
-
-//   //REMOVE CUrRENt EVENT LISTENER
-//   mainButton.removeEventListener("click", start);
-//   //ADD NEW EVENT LISTENER
-//   mainButton.addEventListener("click", breaking);
-// };
-
 // stops work timer and begin break timer
 const breaking = () => {
   clearInterval(id);
-  upperCont.style.backgroundColor = "#eb6e6e";
-  lowerCont.style.backgroundColor = "#eb6e6e";
-
+  upperCont.style.backgroundColor = "rgb(188, 244, 221)";
+  lowerCont.style.backgroundColor = "rgb(188, 244, 221)";
+  
   let currentMinute = breakInput.value;
   let currentSecond = 0;
 
@@ -92,20 +58,11 @@ const breaking = () => {
     currentSecond--;
   }, 1000);
 
+
+
   breakInput.style.display = "none";
   breakTimer.style.display = "block";
-  mainButton.innerHTML = "Back to work?";
-
-  // id = setInterval(() => {
-  //   setBreak();
-  //   --breakInputTime;
-  //   breakTimer.innerHTML = breakInputTime;
-  //   if (breakInputTime <= 0) {
-  //     //play sound
-  //     clearInterval(id);
-  //     // start();
-  //   }
-  // }, 1000);
+  mainButton.innerHTML = "Back to work!";
 
   mainButton.removeEventListener("click", breaking);
 
@@ -113,34 +70,44 @@ const breaking = () => {
 };
 
 const reset = () => {
-  // (async () => {
-  //   const response = await chrome.runtime.sendMessage({ method: "get_name" });
-  //   // do something with response here, not outside the function
-  //   console.log(response);
-  // })();
-
   clearInterval(id);
-
-  // workTimer.style.display = "none";
-  // workInput.style.display = "block";
 
   breakTimer.style.display = "none";
   breakInput.style.display = "block";
 
-  mainButton.innerText = "Relax!";
+  mainButton.innerText = "Relax now!";
 
   mainButton.removeEventListener("click", breaking);
 
   mainButton.addEventListener("click", breaking);
 };
 
-const pause = () => {};
+const pause = () => {
+  mainButton.innerHTML = "Are you SURE?";
+  mainButton.removeEventListener("click", pause);
+
+  mainButton.addEventListener("click", pauseAgain);
+};
+
+const pauseAgain = () => {
+  breakTimer.style.display = "none";
+  breakInput.style.display = "block";
+  upperCont.style.backgroundColor = "#d9ebf1";
+  lowerCont.style.backgroundColor = "#d9ebf1";
+
+  mainButton.innerText = "Relax now!";
+
+  mainButton.removeEventListener("click", pauseAgain);
+
+  mainButton.addEventListener("click", breaking);
+};
+
+async function getCurrentTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  // `tab` will either be a `tabs.Tab` instance or `undefined`.
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+}
 
 mainButton.addEventListener("click", breaking);
 resetButton.addEventListener("click", reset);
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//   if (request.method === "sending_time") {
-//     workTimer.innerText = request.num;
-//   }
-// });
