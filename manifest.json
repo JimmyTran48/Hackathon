@@ -10,5 +10,11 @@
   "background": {
     "service_worker": "./background/background.js"
   },
-  "permissions": ["notifications", "storage", "alarms"]
+  "permissions": ["notifications", "storage", "alarms"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./content.js"]
+    }
+  ]
 }
